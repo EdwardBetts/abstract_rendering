@@ -47,18 +47,18 @@ def _create_plot_component():
     vt = util.zoom_fit(screen,glyphs.bounds(), False)
 
     with Timer("Abstract-Render") as arTimer:   
-      image = core.render(glyphs, 
-                          infos.val(),
-                          blzg.CountCategories("int32"),
-                          npg.Spread(20) + categories.HDAlpha([red, blue, green, purple, black]),
-                          screen,
-                          vt)
 #      image = core.render(glyphs, 
-#                          infos.valAt(4,0),
-#                          blzg.Count(), 
-#                          numeric.BinarySegment(white, black, 1),
+#                          infos.val(),
+#                          blzg.CountCategories("int32"),
+#                          npg.Spread(20) + categories.HDAlpha([red, blue, green, purple, black]),
 #                          screen,
 #                          vt)
+      image = core.render(glyphs, 
+                          infos.valAt(4,0),
+                          blzg.Count(), 
+                          numeric.BinarySegment(white, black, 1),
+                          screen,
+                          vt)
 
     # Create a plot data object and give it this data
     pd = ArrayPlotData()
