@@ -8,6 +8,7 @@ using floating point numbers. The result will be quantized into
 integers.
 """
 from __future__ import print_function
+from six.moves import range
 import ctypes
 import numpy as np
 import os
@@ -15,7 +16,7 @@ import sys
 
 import distutils.sysconfig
 so_ext = distutils.sysconfig.get_config_var('EXT_SUFFIX') \
-        or distutils.sysconfig.get_config_var('SHLIB_SUFFIX') 
+        or distutils.sysconfig.get_config_var('SHLIB_SUFFIX')
 if not so_ext:
     so_ext = distutils.sysconfig.get_config_var('SO') or '.so'
 
@@ -27,12 +28,12 @@ def _type_lib(lib):
 
     if hasattr(lib, "async_transform_f_start"):
         #assume all the async interface
-        lib.async_transform_f_start.argtypes = [c_void_p, c_void_p, 
+        lib.async_transform_f_start.argtypes = [c_void_p, c_void_p,
                                                 c_size_t, c_size_t]
         lib.async_transform_f_start.restype = c_void_p
         lib.async_transform_f_end.argtypes = [c_void_p]
         lib.async_transform_f_next.argtypes = [c_void_p, c_void_p, c_void_p]
-        lib.async_transform_d_start.argtypes = [c_void_p, c_void_p, 
+        lib.async_transform_d_start.argtypes = [c_void_p, c_void_p,
                                                 c_size_t, c_size_t]
         lib.async_transform_d_start.restype = c_void_p
         lib.async_transform_d_end.argtypes = [c_void_p]
@@ -55,7 +56,7 @@ else:
     mk_buff.restype = ctypes.py_object
 
 def _projectRects(viewxform, inputs, outputs, use_dispatch = False):
-    if (inputs.flags.f_contiguous): 
+    if (inputs.flags.f_contiguous):
         inputs = inputs.T
         outputs = outputs.T
 
@@ -78,7 +79,7 @@ def _projectRects(viewxform, inputs, outputs, use_dispatch = False):
     t = ctypes.POINTER(inputtype)
     cast = ctypes.cast
     c_xforms = (inputtype * 4)(*viewxform)
-    c_inputs = (t * 4)(*(cast(inputs[i].ctypes.data, t) 
+    c_inputs = (t * 4)(*(cast(inputs[i].ctypes.data, t)
                          for i in range(0, 4)))
     c_outputs = (t* 4)(*(cast(outputs[i].ctypes.data, t)
                          for i in range(0,4)))
@@ -87,7 +88,7 @@ def _projectRects(viewxform, inputs, outputs, use_dispatch = False):
          ctypes.byref(c_outputs),
          0,
          inputs.shape[1])
-        
+
 
 def _projectRectsGenerator(viewxform,
                            inputs,
@@ -182,9 +183,9 @@ def _project_element(viewxform, inputs, output):
 def report_diffs(a, b, name):
     last_dim = a.shape[1]
     if not np.allclose(a, b):
-        for i in xrange(1, last_dim):
+        for i in range(1, last_dim):
             if not np.allclose(a[:,i], b[:,i]):
-                print('%s::%d fails \nc:\n%s != %s\n' % 
+                print('%s::%d fails \nc:\n%s != %s\n' %
                       (name, i, str(a[:,i]), str(b[:,i])))
 
 
@@ -223,7 +224,7 @@ def simple_test():
 
     if not (chk1 == chk2 == out.shape[1]):
         print('checksums diverge')
-        print('%s == %s' % ('chk1', chk1)) 
+        print('%s == %s' % ('chk1', chk1))
         print('%s == %s' % ('chk2', chk2))
 
     t = time()
@@ -264,7 +265,7 @@ def simple_test():
     out5 = np.copy(out)
     print("numpy version (single) took %f ms" % (t*1000))
 
-    
+
     report_diffs(out0, out2, "libdispatch (double)")
     report_diffs(out1, out2, "plain C (double)")
     report_diffs(out3, out5, "libdispatch (single)")

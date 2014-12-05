@@ -1,5 +1,6 @@
 from __future__ import print_function, division, absolute_import
 from six.moves import map
+from six.moves import range
 import numpy as np
 import re
 from abstract_rendering.fast_project import _projectRects
@@ -61,7 +62,7 @@ class Glyphset(object):
 
         # Ensure visilibity, make sure w/h are always at least one
         # TODO: There is probably a more numpy-ish way to do this...
-        for i in xrange(0, out.shape[0]):
+        for i in range(0, out.shape[0]):
             if out[i, 0] == out[i, 2]:
                 out[i, 2] += 1
             if out[i, 1] == out[i, 3]:
