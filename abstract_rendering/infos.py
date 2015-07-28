@@ -53,12 +53,12 @@ def encode(cats, defcat=-1):
     """Create a function that converts values to numbers.
     The index in the value list passed will be the code-number.
     * cats : Values to create codes for
-    * defcat : Default category; defaults to length fo cats list
+    * defcat : Default category; defaults to length of cats list
     """
 
     if defcat < 0:
         defcat = len(cats)
-    codes = dict(zip(cats, xrange(len(cats))))
+    codes = dict(zip(cats, range(len(cats))))
 
     def f(val):
         return codes.get(val, defcat)

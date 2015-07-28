@@ -10,6 +10,5 @@ except Exception as e:
     print("Error finding version info.")
     print(e)
 
-__version_info__ = dict(zip(["major","minor","micro"], 
+__version_info__ = dict(zip(["major", "minor", "micro"],
                             map(int, __version__.split("."))))
-
