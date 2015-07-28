@@ -41,9 +41,9 @@ def _create_plot_component():
     
     with Timer("Loeading") as arTimer:   
         #glyphs = npg.load_csv("../data/circlepoints.csv", 1, 2, 3, 4)
-        #glyphs = npg.load_hdf("../data/CensusTracts.hdf5", "__data__", "LAT", "LON")
-        glyphs = npg.load_hdf("../data/tweets-subset.hdf", "test", 
-                              "longitude", "latitude", vc="lang_primary")
+        glyphs = npg.load_hdf("../data/CensusTracts.hdf5", "__data__", "LAT", "LON")
+        #glyphs = npg.load_hdf("../data/tweets-subset.hdf", "test", 
+        #                      "longitude", "latitude", vc="lang_primary")
 
     screen = (800,600)
     ivt = util.zoom_fit(screen,glyphs.bounds())
