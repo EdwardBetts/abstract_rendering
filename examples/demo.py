@@ -40,9 +40,7 @@ def _create_plot_component():
     black = util.Color(0,0,0,255)
     
     shape = glyphset.ShapeCodes.POINT
-    #glyphs = glyphset.load_csv("../data/checkerboard.csv", 2, 0, 1, 3,1,1, shape)
     #glyphs = glyphset.load_csv("../data/circlepoints.csv", 1, 2, 3, 4,.1,.1, shape)
-    #glyphs = glyphset.load_csv("../data/sourceforge.csv", 1, 1, 2, -1,.1,.1, shape)
     glyphs = glyphset.load_hdf("../data/CensusTracts.hdf5", "__data__", "LON", "LAT", None, .1, .1, shape)
     #glyphs = glyphset.load_hdf("../data/tweets-subset.hdf", "test", "longitude", "latitude", None, .1, .1, shape)
 
@@ -50,18 +48,18 @@ def _create_plot_component():
     ivt = util.zoom_fit(screen,glyphs.bounds())
 
     with Timer("Abstract-Render") as arTimer:   
-#      image = core.render(glyphs, 
-#                          infos.val(),
-#                          categories.CountCategories(), 
-#                          categories.HDAlpha([red, blue]),
-#                          screen,
-#                          ivt)
       image = core.render(glyphs, 
-                          infos.valAt(4,0),
-                          numeric.Count(),
-                          numeric.BinarySegment(white, black, 1),
+                          infos.val(),
+                          categories.CountCategories(), 
+                          categories.HDAlpha([red, blue]),
                           screen,
                           ivt)
+#      image = core.render(glyphs, 
+#                          infos.valAt(4,0),
+#                          numeric.Count(),
+#                          numeric.BinarySegment(white, black, 1),
+#                          screen,
+#                          ivt)
     print("screen x image -- {0} x {1}".format(screen, image.shape))
 
     # Create a plot data object and give it this data
