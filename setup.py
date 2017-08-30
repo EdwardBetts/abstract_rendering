@@ -8,7 +8,7 @@ from numpy import get_include
 numpy_include_dir = get_include()
 
 # Version reporting/recording
-# The ABSTRACT_RENDERING_VERSION is read from _version.txt whenver setup is run
+# The ABSTRACT_RENDERING_VERSION is read from _version.txt whenever setup is run
 # This version is also used in pypi.
 # If the file is not found, it is created with version -1.-1.-1
 
